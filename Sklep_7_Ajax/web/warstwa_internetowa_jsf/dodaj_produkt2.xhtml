@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="title">
+                <h:outputText
+                    value="#{bundle['dodaj_produkt2.tytul']}">
+                </h:outputText>
+            </ui:define>
+            <ui:define name="content">
+            <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="#{bundle['dodaj_produkt2.outputLabel_nazwa']}" for="nazwa" />
+                <h:inputText
+                    id="nazwa"
+                    title="#{bundle['dodaj_produkt2.inputText_title_nazwa']}"
+                    value="#{managed_produkt.nazwa}"
+                    required="true"
+                    requiredMessage="#{bundle['dodaj_produkt2.inputText_requiredMessage_nazwa']}">
+                        <f:valueChangeListener binding="#{managed_produkt.zmiana1}"/>
+                        <f:ajax event="blur" execute="nazwa" render="messagePanel"/>
+                </h:inputText>
+                
+                <h:outputLabel value="#{bundle['dodaj_produkt2.outputLabel_cena']}" for="cena" />
+                <h:inputText
+                    id="cena"
+                    title="#{bundle['dodaj_produkt2.inputText_title_cena']}"
+                    value="#{managed_produkt.cena}"
+                    required="true"
+                    requiredMessage="#{bundle['dodaj_produkt2.inputText_requiredMessage_cena']}">
+                    <f:convertNumber binding="#{managed_produkt.number_convert}">
+                        <f:valueChangeListener binding="#{managed_produkt.zmiana2}"/>
+                    </f:convertNumber>
+                    <f:validateLongRange minimum="#{managed_produkt.minCena}" maximum="#{managed_produkt.maxCena}"/>
+                    <f:ajax event="blur" execute="cena" render="messagePanel"/>
+                </h:inputText>
+                
+                <h:outputLabel value="#{bundle['dodaj_produkt2.outputLabel_promocja']}" for="promocja" />
+                <h:selectOneMenu
+                    id="promocja"
+                    title="#{bundle['dodaj_produkt2.inputText_title_promocja']}"
+                    value="#{managed_produkt.promocja}"
+                    required="true"
+                    requiredMessage="#{bundle['dodaj_produkt2.inputText_requiredMessage_promocja']}">
+                        <f:selectItems value="#{managed_produkt.itemsAvailableSelectOne}"/>
+                        <f:ajax execute="cena promocja" render="brutto"/>
+                </h:selectOneMenu>
+                
+                <h:outputLabel value="#{bundle['dodaj_produkt2.outputLabel_producent']}" for="producent" />
+                <h:inputText
+                    id="producent"
+                    title="#{bundle['dodaj_produkt2.inputText_title_producent']}"
+                    value="#{managed_produkt.producent}"
+                    required="true"
+                    requiredMessage="#{bundle['dodaj_produkt2.inputText_requiredMessage_producent']}">
+                          <f:valueChangeListener binding="#{managed_produkt.zmiana3 }"/>
+                </h:inputText>
+                
+                <h:outputLabel value="#{bundle['dodaj_produkt2.outputLabel_data']}" for="data"/>
+                <h:inputText
+                    id="data"
+                    title="#{bundle['dodaj_produkt2.inputText_title_data']}"
+                    value="#{managed_produkt.data_produkcji}"
+                    required="true"
+                    requiredMessage="#{bundle['dodaj_produkt2.inputText_requiredMessage_data']}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                        <f:ajax event="blur" execute="data" render="messagePanel"/>
+                </h:inputText>
+
+                <h:outputLabel for="brutto" value="#{bundle['dodaj_produkt2.outputLabel_cenaBrutto']}"/>
+                <h:outputText id="brutto" value="#{managed_produkt.cena_brutto_}">
+                    <f:convertNumber currencySymbol="z&#322;" type="currency"/>
+                </h:outputText>
+                
+                
+                <h:outputLabel for="brutto" value="#{bundle['dodaj_produkt2.outputLabel_liczbaPrzecenionychProduktów']}"/>
+                <h:inputText
+                    id="liczba_przecenionych_produktów"
+                    title="#{bundle['dodaj_produkt2.inputText_title_liczbaPrzecenionychProduktówa']}"
+                    required="true"
+                    requiredMessage="#{bundle['dodaj_produkt2.inputText_requiredMessage_liczbaPrzecenionychProduktów']}">
+                    <f:convertNumber minFractionDigits="1" />
+                    <f:validateLongRange minimum="1" maximum="15"/>
+                    <f:ajax event="blur" execute="liczba_przecenionych_produktow" render="messagePanel"/>
+                </h:inputText>
+     
+            </h:panelGrid>        
+            <h:commandLink action="rezultat2" value="OK">
+                <f:actionListener binding="#{managed_produkt}"/>
+            </h:commandLink>
+            </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

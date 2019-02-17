@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="title">
+                <h:outputText
+                    value="#{bundle['rezultat2.tytul']}">
+                </h:outputText>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <h:outputText escape="false" value="#{bundle['rezultat2.outputText_produkt_istnieje']}"
+                                  rendered="#{managed_produkt.stan==0}"/>
+                    <h:panelGrid></h:panelGrid>
+                    <h:panelGrid columns="2" rendered="#{managed_produkt.stan!=0}">
+                        <h:outputLabel value="#{bundle['rezultat2.outputLabel_nazwa']}" for="nazwa"/>
+                        <h:outputText id="nazwa" value="#{managed_produkt.nazwa}"/>
+                
+                        <h:outputLabel value="#{bundle['rezultat2.outputLabel_cena']}" for="cena"/>
+                        <h:outputText id="cena" value="#{managed_produkt.cena}">
+                            <f:convertNumber binding="#{managed_produkt.number_convert}"
+                                             pattern="####.### z&#322; -"/>
+                        </h:outputText>
+
+                        <h:outputLabel value="#{bundle['rezultat2.outputLabel_promocja']}" for="promocja"/>
+                        <h:outputText id="promocja" value="#{managed_produkt.promocja}">
+                            <f:convertNumber type="currency" currencySymbol="%"/>
+                        </h:outputText>
+                
+                        <h:outputLabel value="#{bundle['rezultat2.outputLabel_producent']}" for="producent"/>
+                        <h:outputText id="producent" value="#{managed_produkt.producent}"/>
+
+                        <h:outputLabel value="#{bundle['rezultat2.outputLabel_data']}" for="data"/>
+                        <h:outputText id="data" value="#{managed_produkt.data_produkcji}">
+                            <f:convertDateTime dateStyle="full"
+                                               timeStyle="long"
+                                               type="both"/>
+                        </h:outputText>
+                                                
+                        <h:outputLabel value="#{bundle['rezultat2.outputLabel_brutto']}" for="brutto"/>
+                        <h:outputText id="brutto" value="#{managed_produkt.cena_brutto}"/>
+                    </h:panelGrid>
+            <h:commandButton id="powrot" value="#{bundle['rezultat2.commandButton_powrot']}" action="/faces/index1"/>
+            </h:form>
+            </ui:define>
+            </ui:composition>
+    </h:body>
+</html>
